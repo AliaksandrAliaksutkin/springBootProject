@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>createUser</title>
+</head>
+<body>
+<div align="center">
+    <h1>Create user</h1>
+    </br>  </br>
+    <form method="post" action="/allusers">
+        <input type="hidden" name="id" th:field="*{user.id}">
+        <dl>
+            <dt>First Name:</dt>
+            <dd><input type="text" th:field="*{user.firstName}" name="firstName" required></dd>
+        </dl>
+        <dl>
+            <dt>Last Name:</dt>
+            <dd><input type="text" th:field="*{user.lastName}" name="lastName" required></dd>
+        </dl>
+        <dl>
+            <dt>Age:</dt>
+            <dd><input type="text" th:field="*{user.age}" name="age" required></dd>
+        </dl>
+        <dl>
+            <dt>City:</dt>
+            <dd><input type="text" th:field="*{user.address.city}" name="city" required></dd>
+        </dl>
+        <dl>
+            <dt>Street:</dt>
+            <dd><input type="text" th:field="*{user.address.street}" name="street" required></dd>
+        </dl>
+        <dl>
+            <dt>House:</dt>
+            <dd><input type="text" th:field="*{user.address.house}" name="house" required></dd>
+        </dl>
+        </br>  </br>
+        <button type="submit">Save</button>
+    </form>
+</div>
+</body>
+</html>
