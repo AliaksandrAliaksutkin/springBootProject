@@ -33,14 +33,16 @@ public class UserController {
     }
 
     @PostMapping("allusers")
-    public String editUser(@RequestParam(required = false) Long id, @RequestParam String firstName,
-                           @RequestParam String lastName, @RequestParam Integer age,
+    public String editUser(@RequestParam (required = false)Long id, /*Конструкция require=false сообщает фреймворку о том, что наличие соответствующего bean'а не является обязательным при компиляции программы.*/
+                           @RequestParam String firstName,
+                           @RequestParam String lastName,
+                           @RequestParam Integer age,
                            @RequestParam(name = "address.city") String city,
                            @RequestParam(name = "address.street") String street,
                            @RequestParam(name = "address.house") Integer house) {
         User user = new User(id, firstName, lastName, age, new Address(city, street, house));
         userService.save(user);
-        return "redirect:/homepage"; // /homepage
+        return "redirect:/homepage";
     }
 
     @GetMapping(value = "new")
@@ -58,6 +60,6 @@ public class UserController {
     @GetMapping("/delete")
     public String delete(@RequestParam Long id) {
         userService.deleteById(id);
-        return "redirect:/homepage"; // /homepage
+        return "redirect:/homepage";
     }
 }

@@ -19,12 +19,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/new*").hasRole("ADMIN")
                 .antMatchers("/delete*").hasRole("ADMIN")
                 .antMatchers("/update*").hasRole("ADMIN")
-                .antMatchers("/login*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/homepage", true);
 
     }
@@ -35,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("user").password(passwordEncoder().encode("user")).roles("USER")
                 .and()
-                .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
+                .withUser("alex").password(passwordEncoder().encode("alex")).roles("ADMIN");
     }
 
     @Bean
