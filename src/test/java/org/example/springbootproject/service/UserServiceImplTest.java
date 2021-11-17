@@ -6,41 +6,62 @@ import org.example.springbootproject.model.User;
 import org.example.springbootproject.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import java.util.List;
+import java.util.Optional;
 
-@ExtendWith(MockitoExtension.class) /*регитрация расширения Mockito для дальнейшей инициализации @Mock или  @InjectMocks*/
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {
-    UserService userService;
-    /*@Test
-    public void substring(){
-        assertEquals("llo","Hello".substring(3));
-    }
-    один из дурацких примеров*/
 
     @Mock
     private UserRepository userRepository;
-    /*@Mock создает макет.
-    @InjectMocks создает экземпляр класса и внедряет в этот экземпляр макеты, созданные с помощью аннотаций @Mock(или @Spy).*/
-    @InjectMocks
-    private UserServiceImpl userServiceImpl;
 
     @Test
     void save() {
-        User user = new User("Aliaksandr", "Aliaksutkin", 33
-                ,new Address("Bereza","Komsomolskaya",52));
-        when(userRepository.save(user))
-                .thenReturn(user);
-//        assertNotEquals(user,userServiceImpl.save(user));
-        assertEquals(user,userServiceImpl.save(user));
-//        assertSame(user,userServiceImpl.save(user));
-//        assertNotSame(user,userServiceImpl.save(user));
-        verify(userRepository.save(user));
+        User user = new User(1L, "Aliaksandr", "Aliaksutkin", 33
+                , new Address("Bereza", "Komsomolskaya", 52));
+        when(userRepository.saveAndFlush(user)).thenReturn(user);
+
+        assertEquals(user, userRepository.saveAndFlush(user));
+        verify(userRepository, times(1)).saveAndFlush(user);
     }
 
+    @Test
+    void getAllUsers() {
+        List<User> loserList = List.of(
+                new User(1L, "Aliaksandr", "Aliaksutkin", 33
+                        , new Address("Bereza", "Komsomolskaya", 52)),
+                new User(2L, "Aliaksandr", "Aliaksutkin", 33
+                        , new Address("Bereza", "Komsomolskaya", 52)));
+
+        when(userRepository.findAll()).thenReturn(loserList);
+        assertEquals(loserList, userRepository.findAll());
+        verify(userRepository, times(1)).findAll();
+
+    }
+
+    @Test
+    void getById() {
+        List<User> loserList = List.of(
+                new User(1L, "Aliaksandr", "Aliaksutkin", 33
+                        , new Address("Bereza", "Komsomolskaya", 52)),
+                new User(2L, "Aliaksandr", "Aliaksutkin", 33
+                        , new Address("Bereza", "Komsomolskaya", 52)));
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(loserList.get(0)));
+        assertNotEquals(loserList.get(1), userRepository.findById(1L));
+        verify(userRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    void deleteById() {
+        userRepository.deleteById(1L);
+        verify(userRepository).deleteById(1L);
+    }
 }
