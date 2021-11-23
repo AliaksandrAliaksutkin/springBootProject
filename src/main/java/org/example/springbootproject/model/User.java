@@ -1,7 +1,10 @@
 package org.example.springbootproject.model;
+
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -20,12 +23,20 @@ public class User {
     private String lastName;
     @Column(name = "age")
     private Integer age;
+    @Column(name = "password")
+    private String password;
+
+    @ManyToMany
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_address_user")
     private Address address;
 
-    public User(String firstName, String lastName, Integer age) {
+    public User(Long id, String firstName, String lastName, Integer age, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
