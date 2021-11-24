@@ -3,6 +3,7 @@ package org.example.springbootproject.controllers;
 import lombok.RequiredArgsConstructor;
 import org.example.springbootproject.exception.NoEntityException;
 import org.example.springbootproject.model.Address;
+import org.example.springbootproject.model.Role;
 import org.example.springbootproject.model.User;
 import org.example.springbootproject.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collection;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -37,10 +39,12 @@ public class UserController {
                            @RequestParam String firstName,
                            @RequestParam String lastName,
                            @RequestParam Integer age,
+                           @RequestParam String password,
+                           @RequestParam Role role,
                            @RequestParam(name = "address.city") String city,
                            @RequestParam(name = "address.street") String street,
                            @RequestParam(name = "address.house") Integer house) {
-        User user = new User(id, firstName, lastName, age, new Address(city, street, house));
+        User user = new User(id, firstName, lastName, age, password, new Role(role) , new Address(city, street, house));
         userService.save(user);
         return "redirect:/homepage";
     }

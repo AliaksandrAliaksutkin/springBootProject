@@ -26,13 +26,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_role")
+    private Role role;
+//    private Collection<Role> role;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "id_address_user")
     private Address address;
 
@@ -42,10 +41,12 @@ public class User {
         this.age = age;
     }
 
-    public User(String firstName, String lastName, Integer age, Address address) {
+    public User(String firstName, String lastName, Integer age, String password, Role role, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.password = password;
+        this.role = role;
         this.address = address;
     }
 

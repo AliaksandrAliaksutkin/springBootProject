@@ -21,10 +21,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()                       // порядок элементов antMatchers () имеет значение; сначала должны быть более конкретные правила, а за ними - более общие .
                 .authorizeRequests()
-                .antMatchers("/address*").hasRole("ADMIN")
-                .antMatchers("/new*").hasRole("ADMIN")
-                .antMatchers("/delete*").hasRole("ADMIN")
-                .antMatchers("/update*").hasRole("ADMIN")
+////                .antMatchers("/address*").hasRole("ADMIN")
+////                .antMatchers("/new*").hasRole("ADMIN")
+////                .antMatchers("/delete*").hasRole("ADMIN")
+////                .antMatchers("/update*").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -43,5 +43,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationProvider.setUserDetailsService(userServiceImpl);
         return authenticationProvider;
     }
-
 }
