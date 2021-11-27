@@ -3,6 +3,8 @@ package org.example.springbootproject.controllers;
 import lombok.RequiredArgsConstructor;
 import org.example.springbootproject.exception.NoEntityException;
 import org.example.springbootproject.model.Address;
+import org.example.springbootproject.model.Role;
+import org.example.springbootproject.model.Status;
 import org.example.springbootproject.model.User;
 import org.example.springbootproject.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +22,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/homepage") // /homepage; url - который приводит в данный метод контроллера
+    @PreAuthorize("hasAnyAuthority('users:read')")
     public String viewHomePage(Model model) {
         List<User> listUsers = userService.getAllUsers();
         model.addAttribute("listUser", listUsers); // ключ/значение
@@ -27,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/address")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('users:write')")
     public String getAddress(Model model, @RequestParam Long id) throws NoEntityException {
         User address = userService.getById(id);
         model.addAttribute("address", address);
@@ -35,36 +38,38 @@ public class UserController {
     }
 
     @PostMapping("allusers")
-    public String editUser(@RequestParam (required = false)Long id, /*Конструкция require=false сообщает фреймворку о том, что наличие соответствующего bean'а не является обязательным при компиляции программы.*/
+    @PreAuthorize("hasAnyAuthority('users:write')")
+    public String editUser(@RequestParam(required = false) Long id, /*Конструкция require=false сообщает фреймворку о том, что наличие соответствующего bean'а не является обязательным при компиляции программы.*/
                            @RequestParam String firstName,
                            @RequestParam String lastName,
                            @RequestParam Integer age,
                            @RequestParam String password,
-                           @RequestParam String role,
+                           @RequestParam Role role,
+                           @RequestParam Status status,
                            @RequestParam(name = "address.city") String city,
                            @RequestParam(name = "address.street") String street,
                            @RequestParam(name = "address.house") Integer house) {
-        User user = new User(id, firstName, lastName, age, password,role,new Address(city, street, house));
+        User user = new User(id, firstName, lastName, age, password,role,status,new Address(city, street, house));
         userService.save(user);
         return "redirect:/homepage";
     }
 
     @GetMapping(value = "new")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('users:write')")
     public String userCreate(Model model, User user) {
         model.addAttribute(user);
         return "new";
     }
 
     @GetMapping("/update")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('users:write')")
     public String updateUser(Model model, @RequestParam Long id) throws NoEntityException {
         model.addAttribute(userService.getById(id));
         return "new";
     }
 
     @GetMapping("/delete")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('users:write')")
     public String delete(@RequestParam Long id) {
         userService.deleteById(id);
         return "redirect:/homepage";

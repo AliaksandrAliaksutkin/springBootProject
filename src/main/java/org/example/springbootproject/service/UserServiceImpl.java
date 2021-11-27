@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService /*,UserDetailsService*/ {
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Transactional
@@ -37,22 +37,5 @@ public class UserServiceImpl implements UserService /*,UserDetailsService*/ {
     public User getById(Long id) throws NoEntityException {
         return userRepository.findById(id).orElseThrow(() -> new NoEntityException(id));
     }
-//    public User findByFirstName(String firstName){
-//        return userRepository.findByFirstName(firstName);
-//
-//    }
-//
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user = findByFirstName(username);
-//        if(user == null){
-//            throw new UsernameNotFoundException(String.format("User '%s' not found",username));
-//        }
-//        return new org.springframework.security.core.userdetails.User(user.getFirstName(),user.getPassword(),
-//        mapRolesAutorithies(user.getRole()));
-//    }
-//
-//    private Collection<? extends GrantedAuthority> mapRolesAutorithies(Collection<Role> roles){
-//        return roles.stream().map(r->new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
-//    }
+
 }

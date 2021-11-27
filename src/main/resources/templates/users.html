@@ -28,6 +28,7 @@
             <td th:utext="${user.age}">age</td>
             <td th:utext="${user.password}">password</td>
             <td th:utext="${user.role}">role</td>
+            <td th:utext="${user.status}">status</td>
             <td><a th:href="@{/update(id=${user.id})}">Edit</a>
                 <a th:href="@{/delete(id=${user.id})}">Delete</a>
             </td>
