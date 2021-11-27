@@ -20,15 +20,21 @@ public class User {
     private String lastName;
     @Column(name = "age")
     private Integer age;
-
+    @Column(name = "password")
+    private String password;
+    @Column(name = "role")
+    private String role;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_address_user")
     private Address address;
 
-    public User(String firstName, String lastName, Integer age) {
+    public User(String firstName, String lastName, Integer age, String password, String role, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.password = password;
+        this.role = role;
+        this.address = address;
     }
 
     public User(String firstName, String lastName, Integer age, Address address) {
@@ -38,13 +44,14 @@ public class User {
         this.address = address;
     }
 
-    public User(Long id, String firstName, String lastName, Integer age) {
+    public User(Long id, String firstName, String lastName, Integer age, String password, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.password = password;
+        this.role = role;
     }
-
 
     @Override
     public String toString() {

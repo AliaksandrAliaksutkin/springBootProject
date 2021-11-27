@@ -39,10 +39,12 @@ public class UserController {
                            @RequestParam String firstName,
                            @RequestParam String lastName,
                            @RequestParam Integer age,
+                           @RequestParam String password,
+                           @RequestParam String role,
                            @RequestParam(name = "address.city") String city,
                            @RequestParam(name = "address.street") String street,
                            @RequestParam(name = "address.house") Integer house) {
-        User user = new User(id, firstName, lastName, age, new Address(city, street, house));
+        User user = new User(id, firstName, lastName, age, password,role,new Address(city, street, house));
         userService.save(user);
         return "redirect:/homepage";
     }
