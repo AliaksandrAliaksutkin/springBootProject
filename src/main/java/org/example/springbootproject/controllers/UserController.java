@@ -8,6 +8,7 @@ import org.example.springbootproject.model.Status;
 import org.example.springbootproject.model.User;
 import org.example.springbootproject.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import java.util.List;
 @Controller
 public class UserController {
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/homepage") // /homepage; url - который приводит в данный метод контроллера
     @PreAuthorize("hasAnyAuthority('users:read')")
@@ -49,8 +51,12 @@ public class UserController {
                            @RequestParam(name = "address.city") String city,
                            @RequestParam(name = "address.street") String street,
                            @RequestParam(name = "address.house") Integer house) {
-        User user = new User(id, firstName, lastName, age, password,role,status,new Address(city, street, house));
+
+        String encryptedPassword = passwordEncoder.encode(password);
+        User user = new User(id, firstName, lastName, age, encryptedPassword,role,status,new Address(city, street, house));
         userService.save(user);
+
+//
         return "redirect:/homepage";
     }
 
