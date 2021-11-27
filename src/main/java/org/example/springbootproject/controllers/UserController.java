@@ -5,6 +5,7 @@ import org.example.springbootproject.exception.NoEntityException;
 import org.example.springbootproject.model.Address;
 import org.example.springbootproject.model.User;
 import org.example.springbootproject.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/address")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public String getAddress(Model model, @RequestParam Long id) throws NoEntityException {
         User address = userService.getById(id);
         model.addAttribute("address", address);
@@ -46,18 +48,21 @@ public class UserController {
     }
 
     @GetMapping(value = "new")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public String userCreate(Model model, User user) {
         model.addAttribute(user);
         return "new";
     }
 
     @GetMapping("/update")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public String updateUser(Model model, @RequestParam Long id) throws NoEntityException {
         model.addAttribute(userService.getById(id));
         return "new";
     }
 
     @GetMapping("/delete")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public String delete(@RequestParam Long id) {
         userService.deleteById(id);
         return "redirect:/homepage";
