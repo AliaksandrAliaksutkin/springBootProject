@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User save(User user) {
-        return userRepository.saveAndFlush(user);
+        return userRepository.saveAndFlush(user); //todo зачем saveAndFlush? какое он тебе даст здесь преимущество
     }
 
     @Transactional
