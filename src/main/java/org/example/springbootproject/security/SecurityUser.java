@@ -13,7 +13,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class SecurityUser implements UserDetails {
+public class SecurityUser implements UserDetails {//todo тоже, почему бы это не сделать в одном юзере? зачем из два?...
 
     private final String username;
     private final String password;
