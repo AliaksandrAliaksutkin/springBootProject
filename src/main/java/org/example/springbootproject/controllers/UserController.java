@@ -56,7 +56,6 @@ public class UserController {
         User user = new User(id, firstName, lastName, age, encryptedPassword,role,status,new Address(city, street, house));
         userService.save(user);
 
-//
         return "redirect:/homepage";
     }
 

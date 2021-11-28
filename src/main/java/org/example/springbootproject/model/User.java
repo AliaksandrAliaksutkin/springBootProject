@@ -35,6 +35,12 @@ public class User {
     @JoinColumn(name = "id_address_user")
     private Address address;
 
+    public User(String firstName, String lastName, Integer age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+
     public User(String firstName, String lastName, Integer age, String password, Role role, Status status, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
