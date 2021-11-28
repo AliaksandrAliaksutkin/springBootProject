@@ -35,7 +35,8 @@ public class User {
     @JoinColumn(name = "id_address_user")
     private Address address;
 
-    public User(String firstName, String lastName, Integer age) {
+    public User(Long id, String firstName, String lastName, Integer age) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;

@@ -23,7 +23,7 @@ public class UserServiceImplTest {
 
     @Test
     void save() {
-        User user = new User("Aliaksandr", "Aliaksutkin", 33);
+        User user = new User(1L,"Aliaksandr", "Aliaksutkin", 33);
         when(userRepository.saveAndFlush(user)).thenReturn(user);
         assertEquals(user, userRepository.saveAndFlush(user));
         verify(userRepository, times(1)).saveAndFlush(user);
@@ -32,8 +32,8 @@ public class UserServiceImplTest {
     @Test
     void getAllUsers() {
         List<User> loserList = List.of(
-                new User("Aliaksandr", "Aliaksutkin", 33),
-                new User("Aliaksandr", "Aliaksutkin", 34));
+                new User(1L,"Aliaksandr", "Aliaksutkin", 33),
+                new User(2L,"Aliaksandr", "Aliaksutkin", 34));
         when(userRepository.findAll()).thenReturn(loserList);
         assertEquals(loserList, userRepository.findAll());
         verify(userRepository, times(1)).findAll();
@@ -42,8 +42,8 @@ public class UserServiceImplTest {
     @Test
     void getById() {
         List<User> loserList = List.of(
-                new User( "Aliaksandr", "Aliaksutkin", 33),
-                new User("Aliaksandr", "Aliaksutkin", 33));
+                new User( 1L,"Aliaksandr", "Aliaksutkin", 33),
+                new User(2L,"Aliaksandr", "Aliaksutkin", 33));
         when(userRepository.findById(1L)).thenReturn(Optional.of(loserList.get(0)));
         assertNotEquals(loserList.get(1), userRepository.findById(1L));
         verify(userRepository, times(1)).findById(1L);
