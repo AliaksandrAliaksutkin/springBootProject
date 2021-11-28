@@ -11,13 +11,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Transactional
     @Override
     public User save(User user) {
-        return userRepository.saveAndFlush(user);
+        return userRepository.saveAndFlush(user); //todo зачем saveAndFlush? какое он тебе даст здесь преимущество
     }
 
     @Transactional
@@ -37,4 +37,5 @@ public class UserServiceImpl implements UserService{
     public User getById(Long id) throws NoEntityException {
         return userRepository.findById(id).orElseThrow(() -> new NoEntityException(id));
     }
+
 }

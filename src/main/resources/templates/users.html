@@ -15,6 +15,9 @@
             <th>First name</th>
             <th>Last name</th>
             <th>Age</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -24,6 +27,9 @@
             <td><a th:utext="${user.firstName}" th:href="@{/address(id=${user.id})}">first name<a/></a>
             <td th:utext="${user.lastName}">last name</td>
             <td th:utext="${user.age}">age</td>
+            <td th:utext="${user.password}">password</td>
+            <td th:utext="${user.role}">role</td>
+            <td th:utext="${user.status}">status</td>
             <td><a th:href="@{/update(id=${user.id})}">Edit</a>
                 <a th:href="@{/delete(id=${user.id})}">Delete</a>
             </td>
