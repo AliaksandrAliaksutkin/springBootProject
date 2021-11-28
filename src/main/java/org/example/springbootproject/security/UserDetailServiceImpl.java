@@ -9,8 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
-@Service("userDetailsServiceImpl")
-public class UserDetailServiceImpl implements UserDetailsService {
+@Service("userDetailsServiceImpl")//todo не понимаю зачем зде то что в скобках...
+public class UserDetailServiceImpl implements UserDetailsService { // todo можно все это сделать в основном сервисе юзера и не делать отдельный
 
     private final UserRepository userRepository;
 
